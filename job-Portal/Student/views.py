@@ -67,7 +67,7 @@ def main_login(request):
 @redirect_authenticated_user
 def main_page(request):
 
-            stud_id = request.session.get("username")
+            stud_email = request.session.get("username")
             last_post = newsDB.objects.latest('newsId')
             recent_posts = newsDB.objects.order_by('newsId')[0:5]
             last_post2 = newsDB2.objects.latest('newsId')
@@ -76,8 +76,8 @@ def main_page(request):
             placed_posts = placed_studdb.objects.order_by('p_id')[0:30]
             marquee_texts = Marquee.objects.all()
 
-            if stud_id:
-                name = StudentDB.objects.get(StudentId=stud_id)
+            if  stud_email:
+                name = StudentDB.objects.get(Email=stud_email)
                 return render(request, "main_home.html",
                               {"name": name, "job_data": job_data, "last_post": last_post, "last_post2": last_post2,
                                "recent_posts": recent_posts, "recent_posts2": recent_posts2,
@@ -221,10 +221,12 @@ def stud_user(request):
 # @redirect_authenticated_user
 def stud_login(request):
     if request.method == "POST":
-        stud_id = request.POST.get('userid')
-        stud_pwd = request.POST.get('pass')
-        if StudentDB.objects.filter(StudentId=stud_id, password=stud_pwd).exists():
-            request.session['username'] = stud_id
+        email = request.POST.get('email')
+        stud_pwd = request.POST.get('password')
+        user = StudentDB.objects.filter(Email=email, password=stud_pwd)
+        print(user)
+        if user:
+            request.session['username'] =  email
             request.session['password'] = stud_pwd
             messages.success(request, "Login successfully")
             return redirect(main_page)
@@ -496,3 +498,26 @@ def applytraining(request,trainID):
     obj =TrainingDB(newsId=news, StudentId=name)
     obj.save()
     return redirect(stud_notification)
+
+def student_registration(request):
+  
+    if request.method == "POST":
+        fname = request.POST.get("fname")
+        lname = request.POST.get("lname")
+      
+        dob = request.POST.get("dob")
+        gender = request.POST.get("gender")
+        email = request.POST.get("email")
+        contact = request.POST.get("contact")
+       
+        password = request.POST.get("password")
+       
+        obj = StudentDB(FirstName=fname, LastName=lname, 
+                        DateOfBirth=dob, Gender=gender, Email=email, ContactNo=contact, password=password)
+        obj.save()
+        return redirect('main_login')
+
+    return render(request,'student_signup.html')
+
+def faculty_registration(request):
+    return render(request,'faculty_signup.html')
