@@ -46,4 +46,6 @@ urlpatterns = [
 
     path('save-status/', views.save_status, name='save_status'),
     path('applytraining/<int:trainID>/', views.applytraining, name='applytraining'),
+    path('student_signup',views.student_registration,name='student_signup'),
+    path('trainer_signup',views.faculty_registration,name='faculty_signup'),
 ]

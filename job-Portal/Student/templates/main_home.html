@@ -149,14 +149,25 @@
         <a href="{% url 'stud_profile' %}" class="small btn btn-primary px-4 py-2 rounded-0.5">{{name.FirstName}}</a>
         <a href="{% url 'stud_logout' %}" class="small btn btn-primary px-4 py-2 rounded-0.5">Logout</a>
       {% else %}
-        <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
+        <!-- <ul class="site-menu main-menu js-clone-nav ml-auto d-none d-lg-block">
           <li class="has-children">
             <a href="#" class="nav-link text-left">Login</a>
             <ul class="dropdown">
               <li><a href="{% url 'main_login' %}">Student login</a></li>
               <li><a href="{% url 'main-login2' %}">Faculty login</a></li>
+
+            </ul>
+          </li> -->
+          <li><a href="{% url 'main_login' %}">login</a></li>
+          <li class="has-children">
+            <a href="#" class="nav-link text-left">Signup</a>
+            <ul class="dropdown">
+              <li><a href="{% url 'student_signup' %}">Student Signup</a></li>
+              <li><a href="{% url 'faculty_signup' %}">Faculty Signup</a></li>
+
             </ul>
           </li>
+
         </ul>
       {% endif %}
     </li>
