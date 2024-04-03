@@ -26,7 +26,9 @@ urlpatterns = [
     path('stud_save/',views.stud_save,name="stud_save"),
     path('stud_logout/',views.stud_logout,name="stud_logout"),
     path('jobs_view/', views.jobs_view, name="jobs_view"),
+    path('course_view/', views.course_view, name="course_view"),
     path('jobs_view_single/<int:job_id>/', views.jobs_view_single, name="jobs_view_single"),
+    path('course_view_single/<int:course_id>/', views.course_view_single, name="course_view_single"),
     path('job_apply/<int:job_id>/', views.job_apply, name="job_apply"),
     path('main_login/', views.main_login, name="main_login"),
 

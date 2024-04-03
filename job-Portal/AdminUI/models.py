@@ -76,7 +76,8 @@ class InterviewStep(models.Model):
 
 class JobApplications(models.Model):
     JobId = models.ForeignKey(JobsDB, on_delete=models.CASCADE)
-    StudentId = models.ForeignKey(StudentDB, on_delete=models.CASCADE)
+    # StudentId = models.ForeignKey(StudentDB, on_delete=models.CASCADE)
+    Email = models.ForeignKey(StudentDB, on_delete=models.CASCADE)
     Resume = models.FileField(upload_to="Resume")
 
 
