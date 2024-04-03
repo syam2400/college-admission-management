@@ -93,7 +93,7 @@ def recruiter(request):
     stud_id = request.session.get("username")
     job_data = JobsDB.objects.all()
     if stud_id:
-        name = StudentDB.objects.get(StudentId=stud_id)
+        name = StudentDB.objects.get(Email=stud_id)
         return render(request, "1_recruiter.html", {"name": name, 'job_data': job_data})
     else:
         return render(request, "1_recruiter.html", {'job_data': job_data})
@@ -102,7 +102,7 @@ def recruiter(request):
 def placement(request):
     stud_id = request.session.get("username")
     if stud_id:
-        name = StudentDB.objects.get(StudentId=stud_id)
+        name = StudentDB.objects.get(Email=stud_id)
         return render(request, "2_placement.html", {"name": name})
     else:
         return render(request, "2_placement.html")
@@ -126,7 +126,7 @@ def gallery(request):
 def contact(request):
     if 'username' in request.session:
         stud_id = request.session["username"]
-        name = StudentDB.objects.get(StudentId=stud_id)
+        name = StudentDB.objects.get(Email=stud_id)
         return render(request, "6_contact.html",{'name':name})
     else:
         return render(request, "6_contact.html")
@@ -142,7 +142,7 @@ def indexpage(request):
 
 def stud_profile(request):
     stud_id = request.session["username"]
-    name = StudentDB.objects.get(StudentId=stud_id)
+    name = StudentDB.objects.get(Email=stud_id)
     course = CourseDB.objects.get(CourseId=name.CourseId.CourseId)
     dept = DepartmentDB.objects.get(DeptId=course.DeptId.DeptId)
     return render(request, "student_profile.html", {'name': name, 'course': course, 'dept': dept})
@@ -150,7 +150,7 @@ def stud_profile(request):
 
 def stud_edit(request):
     stud_id = request.session["username"]
-    name = StudentDB.objects.get(StudentId=stud_id)
+    name = StudentDB.objects.get(Email=stud_id)
     course = CourseDB.objects.get(CourseId=name.CourseId.CourseId)
     dept = DepartmentDB.objects.get(DeptId=course.DeptId.DeptId)
     return render(request, "student_edit.html", {'name': name, 'course': course, 'dept': dept})
@@ -202,7 +202,7 @@ def stud_save(request):
 def stud_notification(request):
     if 'username' in request.session:
         stud_id = request.session["username"]
-        name = StudentDB.objects.get(StudentId=stud_id)
+        name = StudentDB.objects.get(Email=stud_id)
         obj = newsDB.objects.all()
         return render(request, 'notification.html', {"obj": obj,'name':name})
     else:
@@ -247,22 +247,30 @@ def stud_logout(request):
 def jobs_view(request):
     if 'username' in request.session:
         stud_id = request.session["username"]
-        name = StudentDB.objects.get(StudentId=stud_id)
+        name = StudentDB.objects.get(Email=stud_id)
         job_data = JobsDB.objects.all()
         return render(request, "jobs_view.html", {'job_data': job_data,'name':name})
     else:
         job_data = JobsDB.objects.all()
         return render(request, "jobs_view.html", {'job_data': job_data})
 
-
+def course_view(request):
+    if 'username' in request.session:
+        stud_id = request.session["username"]
+        name = StudentDB.objects.get(Email=stud_id)
+        course_data = CourseDB.objects.all()
+        return render(request, "course_view.html", {'course_data': course_data,'name':name})
+    else:
+        course_data = CourseDB.objects.all()
+        return render(request, "course_view.html", {'course_data': course_data})
 
 
 def jobs_view_single(request, job_id):
     if 'username' in request.session:
         stud_id = request.session["username"]
-        name =StudentDB.objects.get(StudentId=stud_id)
+        name =StudentDB.objects.get(Email=stud_id)
         job_data = JobsDB.objects.get(JobId=job_id)
-        applied = JobApplications.objects.filter(JobId=job_id, StudentId=stud_id).exists()
+        applied = JobApplications.objects.filter(JobId=job_id, Email=stud_id).exists()
 
 
 
@@ -272,13 +280,26 @@ def jobs_view_single(request, job_id):
         messages.error(request, 'Please log in to view this page.')
         return render(request, "main_login.html")
 
+def course_view_single(request, course_id):
+    if 'username' in request.session:
+        stud_id = request.session["username"]
+        name =StudentDB.objects.get(Email=stud_id)
+        course_data = CourseDB.objects.get(CourseId=course_id)
+        # applied = JobApplications.objects.filter(JobId=job_id, Email=stud_id).exists()
 
+
+
+        return render(request, "course_view_single.html",
+                      {'course_data': course_data, 'name':name})
+    else:
+        messages.error(request, 'Please log in to view this page.')
+        return render(request, "main_login.html")
 def job_apply(request, job_id):
     stud_id = request.session["username"]
-    name = StudentDB.objects.get(StudentId=stud_id)
+    name = StudentDB.objects.get(Email=stud_id)
     job = JobsDB.objects.get(JobId=job_id)
     resume = request.FILES["resume"]
-    obj = JobApplications(JobId=job, StudentId=name, Resume=resume)
+    obj = JobApplications(JobId=job, Email=name, Resume=resume)
     obj.save()
     return redirect(jobs_view)
 
@@ -287,9 +308,9 @@ def job_apply(request, job_id):
 def notification_single(request, news_ids):
     if 'username' in request.session:
         stud_id = request.session["username"]
-        name = StudentDB.objects.get(StudentId=stud_id)
+        name = StudentDB.objects.get(Email=stud_id)
         news_data = newsDB.objects.get(newsId=news_ids)
-        applied = TrainingDB.objects.filter(newsId=news_ids, StudentId=stud_id).exists()
+        applied = TrainingDB.objects.filter(newsId=news_ids, Email=stud_id).exists()
 
         return render(request, "notification_single.html",
                       {"news_data": news_data, 'applied': applied, 'name': name})
@@ -493,7 +514,7 @@ def save_status(request):
 
 def applytraining(request,trainID):
     stud_id = request.session["username"]
-    name = StudentDB.objects.get(StudentId=stud_id)
+    name = StudentDB.objects.get(Email=stud_id)
     news = newsDB.objects.get(newsId=trainID)
     obj =TrainingDB(newsId=news, StudentId=name)
     obj.save()
