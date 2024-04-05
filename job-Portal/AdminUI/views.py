@@ -20,7 +20,7 @@ import pandas as pd
 def admin_indexpage(request):
     if 'username' in request.session:
         fac_name = request.session["username"]
-        name = FacultyEnrollmentDB.objects.get(FacultyID=fac_name)
+        name = FacultyEnrollmentDB.objects.get(Email=fac_name)
 
         return render(request,'adminindex.html',{'name': name})
     else:
@@ -33,7 +33,7 @@ def admin_indexpage(request):
 def add_dept(request):
     if 'username' in request.session:
         fac_name = request.session["username"]
-        name = FacultyEnrollmentDB.objects.get(FacultyID=fac_name)
+        name = FacultyEnrollmentDB.objects.get(Email=fac_name)
         return render(request, "AddDepartment.html",{'name': name})
     else:
         return redirect('main_page')

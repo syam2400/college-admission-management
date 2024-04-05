@@ -12,8 +12,11 @@
 
 <div class=" full-page-wrapper d-flex align-items-center ">
     <div class="card col-lg-4 mx-auto" style="margin-top:5%;margin-bottom:5%;">
-        <div class="card-body px-5 py-5">
-            <h3 class="card-title text-left mb-3" style="color:black;text-align:center; ">Student Login</h3>
+        <div class="card-body px-5 py-5" >
+            <div style="display: flex;align-items: center;justify-content: center;">
+                <h3 class="card-title text-left mb-3" style="color:black;text-align:center; ">Login</h3>
+            </div>
+          
             <form method="post" action="{% url 'stud_login' %}">
                 {% csrf_token %}
                 <div class="form-group">

@@ -223,19 +223,20 @@ def stud_login(request):
     if request.method == "POST":
         email = request.POST.get('email')
         stud_pwd = request.POST.get('password')
-        user = StudentDB.objects.filter(Email=email, password=stud_pwd)
-        print(user)
-        if user:
+
+        if  StudentDB.objects.filter(Email=email, password=stud_pwd):
             request.session['username'] =  email
             request.session['password'] = stud_pwd
             messages.success(request, "Login successfully")
             return redirect(main_page)
+        elif FacultyEnrollmentDB.objects.filter(Email=email, password=stud_pwd):
+            request.session['username'] =  email
+            request.session['password'] = stud_pwd
+            messages.success(request, "Login successfully")
+            return redirect('admin_indexpage')
         else:
             messages.error(request, "Invalid ID or Password")
             return redirect(main_login)
-    else:
-        messages.error(request, "Invalid ID or Password")
-        return redirect(main_login)
 
 
 def stud_logout(request):
@@ -538,8 +539,34 @@ def student_registration(request):
 
     return render(request,'student_signup.html')
 
+
+
+
 def faculty_registration(request):
-    return render(request,'faculty_signup.html')
+    if request.method == "POST":
+        email = request.POST.get("email")
+        name = request.POST.get("name")
+        endate = request.POST.get("date")
+        dept = request.POST.get("dept")
+        dept_data = DepartmentDB.objects.get(DeptName=dept)
+        deptt = dept_data.DeptId
+        contact = request.POST.get("contact")
+        desig = request.POST.get("designation")
+        status = request.POST.get("admin_status")
+        password = request.POST.get("password")
+        if status:
+            obj = FacultyEnrollmentDB(Name=name,Email=email,password=password, Joined=endate, DeptId=dept_data, Designation=desig, Contact=contact,
+                                      is_admin="True")
+            obj.save()
+        else:
+            obj = FacultyEnrollmentDB(Name=name,password=password, Joined=endate,Email=email, DeptId=dept_data, Designation=desig, Contact=contact,
+                                      is_admin="False")
+            obj.save()
+
+            return redirect('main_login')
+    data = DepartmentDB.objects.all()
+    return render(request,'faculty_signup.html',{'data':data})
+
 def submission_form(request):
     if 'username' in request.session:
         if request.method == "POST":
