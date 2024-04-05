@@ -547,3 +547,26 @@ def submission_form(request):
     else:
         messages.error(request, 'Please log in to view this page.')
         return redirect('main_login')
+
+def course_submission(request):
+    if request.method == "POST":
+        fname = request.POST.get("fname")
+        lname = request.POST.get("lname")
+        enid = request.POST.get("enid")
+        endate = request.POST.get("endate")
+        course = request.POST.get("course")
+        course_data = CourseDB.objects.get(CourseName=course)
+        coursee = course_data.CourseId
+        dob = request.POST.get("dob")
+        gender = request.POST.get("gender")
+        email = request.POST.get("email")
+        contact = request.POST.get("contact")
+        address = request.POST.get("address")
+        gname = request.POST.get("gname")
+        gcontact = request.POST.get("gcontact")
+        im = request.FILES['img']
+        obj = StudentDB(FirstName=fname, LastName=lname, EnrollmentID=enid, EnrollDate=endate, CourseId=course_data,
+                        DateOfBirth=dob, Gender=gender, Email=email, ContactNo=contact, Address=address,
+                        GuardianName=gname, GuardianContact=gcontact, Image=im, password=contact)
+        obj.save()
+        return redirect(add_student)
