@@ -8,7 +8,9 @@ from django.utils import timezone
 class DepartmentDB(models.Model):
     DeptId = models.AutoField(primary_key=True)
     DeptName = models.CharField(max_length=100)
-
+   
+    def __str__(self):
+        return self.DeptName
 
 class CourseDB(models.Model):
     CourseId = models.AutoField(primary_key=True)
@@ -26,7 +28,7 @@ class StudentDB(models.Model):
     LastName = models.CharField(max_length=200, null=True, blank=True)
     DateOfBirth = models.DateField(null=True, blank=True)
     Gender = models.CharField(max_length=1, null=True, blank=True)
-    Email = models.EmailField(max_length=200, null=True, blank=True)
+    Email = models.EmailField(max_length=200, null=True, blank=True,unique=True)
     ContactNo = models.IntegerField(blank=True, null=True)
     Address = models.TextField(null=True, blank=True)
     GuardianName = models.CharField(max_length=200, null=True, blank=True)
@@ -43,13 +45,18 @@ class StudentDB(models.Model):
 
 
 class FacultyEnrollmentDB(models.Model):
+    Email = models.EmailField(max_length=200, null=True, blank=True,unique=True)
     FacultyID = models.AutoField(primary_key=True)
     Name = models.CharField(max_length=50)
     Joined = models.DateField(null=True, blank=True)
     DeptId = models.ForeignKey(DepartmentDB, on_delete=models.CASCADE)
     Designation = models.CharField(max_length=100, null=True, blank=True)
     Contact = models.CharField(max_length=20, null=True, blank=True)
+    password = models.CharField(max_length=50, null=True, blank=True)
     is_admin = models.BooleanField(default=False, null=True, blank=True)
+
+    def __str__(self):
+        return self.Email
 
 
 class JobsDB(models.Model):
