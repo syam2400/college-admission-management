@@ -13,9 +13,9 @@
 <div class="col-12 grid-margin stretch-card">
     <div class="card" style="background-color: gray;">
         <div class="card-body">
-            <h4 class="card-title" style="color: black;">Job Details</h4>
+            <h4 class="card-title" style="color: black;">Course Details</h4>
             <p class="card-description"></p>
-        <form class="forms-sample" method="post" action="#" enctype="multipart/form-data">
+        <form class="forms-sample" method="post" action="{% url 'submission_form' %}"    enctype="multipart/form-data">
             {% csrf_token %}
                 <div class="card-body">
                     <h4 class="card-title"></h4>
@@ -39,34 +39,7 @@
                     </div>
 
 
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-6">-->
-<!--                            <div class="form-group row">-->
-<!--                                <label class="col-sm-3 col-form-label">Location :</label>-->
-<!--                                <div class="col-sm-9">-->
-<!--                                    <h5 class="col-form-label">{{job_data.Location}}</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-6">-->
-<!--                            <div class="form-group row">-->
-<!--                                <label class="col-sm-3 col-form-label">Qualification :</label>-->
-<!--                                <div class="col-sm-9">-->
-<!--                                    <h5 class="col-form-label">{{job_data.Qualification}}</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-md-6">-->
-<!--                            <div class="form-group row">-->
-<!--                                <label class="col-sm-3 col-form-label">Email :</label>-->
-<!--                                <div class="col-sm-9">-->
-<!--                                    <h5 class="col-form-label">{{job_data.Email}}</h5>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group row">
@@ -82,21 +55,9 @@
 
 
 
+                <button class="btn btn-primary mr-2 btn-rounded">Apply course</button>
 
 
-                    {% if applied %}
-                        <button class="btn btn-primary mr-2 btn-rounded" disabled>Applied</button>
-
-                    {% else %}
-
-                    <label class="btn btn-secondary btn-rounded">
-                            Upload +2  certificate to Apply (.pdf)
-                            <input id="ResumeInput" name="resume" type="file" style="display: none;" onchange="displayFileName(this)">
-
-                        </label>
-                        <span id="SelectedFileName"></span><br><br>
-                    <button  class="btn btn-primary mr-2 btn-rounded" id="applybutton">Submit Application</button>
-                    {% endif %}
 
 
 
@@ -109,13 +70,11 @@
     </div>
 </div>
 
-<script>
-
-    function displayFileName(input) {
-        var fileName = input.files[0].name;
-        document.getElementById('SelectedFileName').innerHTML = 'Selected File: ' + fileName;
-    }
-</script>
+<!--<script>-->
+<!--    document.getElementById("applybutton").onclick = function() {-->
+<!--        window.location.href = "";-->
+<!--    };-->
+<!--</script>-->
 
 {% endblock %}
 

@@ -117,7 +117,7 @@ def training(request):
 def gallery(request):
     if 'username' in request.session:
         stud_id = request.session["username"]
-        name = StudentDB.objects.get(StudentId=stud_id)
+        name = StudentDB.objects.get(Email=stud_id)
         return render(request, "4_gallery.html",{'name':name})
     else:
         return render(request, "4_gallery.html")
@@ -134,7 +134,7 @@ def contact(request):
 
 def indexpage(request):
     stud_id = request.session["username"]
-    name = StudentDB.objects.get(StudentId=stud_id)
+    name = StudentDB.objects.get(Email=stud_id)
     course = CourseDB.objects.get(CourseId=name.CourseId.CourseId)
     dept = DepartmentDB.objects.get(DeptId=course.DeptId.DeptId)
     return render(request, "studentindex.html", {'name': name, 'course': course, 'dept': dept})
@@ -285,15 +285,13 @@ def course_view_single(request, course_id):
         stud_id = request.session["username"]
         name =StudentDB.objects.get(Email=stud_id)
         course_data = CourseDB.objects.get(CourseId=course_id)
-        # applied = JobApplications.objects.filter(JobId=job_id, Email=stud_id).exists()
-
-
 
         return render(request, "course_view_single.html",
                       {'course_data': course_data, 'name':name})
     else:
         messages.error(request, 'Please log in to view this page.')
         return render(request, "main_login.html")
+
 def job_apply(request, job_id):
     stud_id = request.session["username"]
     name = StudentDB.objects.get(Email=stud_id)
@@ -542,3 +540,10 @@ def student_registration(request):
 
 def faculty_registration(request):
     return render(request,'faculty_signup.html')
+def submission_form(request):
+    if 'username' in request.session:
+        if request.method == "POST":
+            return render(request, "submission_form.html")
+    else:
+        messages.error(request, 'Please log in to view this page.')
+        return redirect('main_login')
