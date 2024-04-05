@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'studentindex.html' %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Submission Form</title>
+
+</head>
+<body>
+<div class="card-body" style="background-color: gray;">
+    <h4 class="card-title">Submission Form</h4><br>
+    <form  class="forms-sample" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="student_name" class="form-label" style="color: white;">Student Name:</label>
+            <input type="text" class="form-control" id="student_name" style="background-color: gray; border: 1px solid black; color: white;" name="student_name" required>
+        </div>
+        <div class="form-group">
+            <label for="phone_number" class="form-label" style="color: white;">Phone Number:</label>
+            <input type="text" class="form-control" id="phone_number" style="background-color: gray; border: 1px solid black; color: white;" name="phone_number" required>
+        </div>
+        <div class="form-group">
+            <label for="email" class="form-label" style="color: white;">Email:</label>
+            <input type="email" class="form-control" id="email" style="background-color: gray; border: 1px solid black; color: white;" name="email" required>
+        </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">Date of Birth</label>
+                        <input type="date" class="form-control"  name="dob" style="background-color: gray; border: 1px solid black; color: white;">
+                  </div>
+                        <div class="form-group">
+                        <label for="exampleInputName1">Course</label>
+                        <select class="form-control"  name="course" style="background-color: gray; border: 1px solid black; color: white;">
+                                {% for i in data %}
+                                <option value="{{i.CourseName}}">{{i.CourseName}}</option>
+                                {% endfor %}
+                            </select>
+                      </div>
+                        <div class="form-group">
+                        <label  style="color: white;">Gender</label>
+                            <select name="gender" class="form-control" style="background-color: gray; border: 1px solid black; color: white;" >
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                            <div class="form-group">
+                        <label >Religion</label>
+                        <input type="text" class="form-control"  name="rname" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+                                    <div class="form-group">
+                        <label >District</label>
+                        <input type="text" class="form-control"  name="dictname" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+
+                                <div class="form-group">
+                        <label  >Address</label>
+                            <textarea class="form-control"  name="address" style="background-color: gray; border: 1px solid black; color: white;"></textarea>
+                      </div>
+                    <div class="form-group">
+                        <label >Guardian Name</label>
+                        <input type="text" class="form-control"  name="gname" style="background-color: gray; border: 1px solid black; color: white;">
+                      </div>
+        <div class="form-group">
+            <label for="plus_two_certificate" class="form-label" style="color: white;">Plus Two Certificate:</label>
+            <input type="file" class="form-control" id="plus_two_certificate" style="background-color: gray; border: 1px solid black; color: white;" name="plus_two_certificate" required accept=".pdf">
+        </div>
+        <div class="form-group">
+            <label for="sslc_certificate" class="form-label" style="color: white;">SSLC Certificate:</label>
+            <input type="file" class="form-control" id="sslc_certificate" style="background-color: gray; border: 1px solid black; color: white;" name="sslc_certificate" required accept=".pdf">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+</body>
+</html>
+{% endblock %}

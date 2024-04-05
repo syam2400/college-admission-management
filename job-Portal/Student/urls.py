@@ -50,4 +50,5 @@ urlpatterns = [
     path('applytraining/<int:trainID>/', views.applytraining, name='applytraining'),
     path('student_signup',views.student_registration,name='student_signup'),
     path('trainer_signup',views.faculty_registration,name='faculty_signup'),
+    path('submission_form/', views.submission_form, name='submission_form'),
 ]

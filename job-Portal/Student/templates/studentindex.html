@@ -46,7 +46,7 @@
               {% if request.session.username %}
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="" alt="">
+                  <img class="img-xs rounded-circle " src="{{name.Image.url}}" alt="">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
@@ -192,7 +192,7 @@
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   {% if request.session.username %}
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="" alt="">
+                    <img class="img-xs rounded-circle" src="{{name.Image.url}}" alt="">
                     <p class="mb-0 d-none d-sm-block navbar-profile-name" style="color: black;">{{name.FirstName}}</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
